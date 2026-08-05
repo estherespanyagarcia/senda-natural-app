@@ -1,0 +1,22 @@
+name: Daily Content Generation
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger daily content generation
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X GET \
+            -H "x-cron-secret: ${{ secrets.CRON_SECRET }}" \
+            https://senda-natural-app.vercel.app/api/automation/generate-daily)
+          echo "Response status: $response"
+          if [ "$response" != "200" ]; then
+            echo "Error: received status $response"
+            exit 1
+          fi
