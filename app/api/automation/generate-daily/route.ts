@@ -105,7 +105,6 @@ async function createVideoAgent(
   const body: Record<string, unknown> = {
     prompt,
     orientation: "portrait",
-    title: `Senda Natural — Día ${entry.dia} — ${entry.tema}`,
   };
 
   if (process.env.HEYGEN_AVATAR_ID) body.avatar_id = process.env.HEYGEN_AVATAR_ID;
