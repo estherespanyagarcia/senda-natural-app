@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Trigger daily content generation
         run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" \
+          response=$(curl -sL -o /dev/null -w "%{http_code}" \
             -X GET \
             -H "x-cron-secret: ${{ secrets.CRON_SECRET }}" \
             https://senda-natural-automatizacion-rrss-git-main-senda-natural.vercel.app/api/automation/generate-daily)
@@ -29,7 +29,7 @@ jobs:
     steps:
       - name: Check HeyGen video status
         run: |
-          curl -s \
+          curl -sL \
             -X GET \
             -H "x-cron-secret: ${{ secrets.CRON_SECRET }}" \
             https://senda-natural-automatizacion-rrss-git-main-senda-natural.vercel.app/api/automation/check-video
