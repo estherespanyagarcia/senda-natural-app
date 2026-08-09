@@ -111,7 +111,7 @@ async function createVideoAgent(
   if (process.env.HEYGEN_AVATAR_ID) body.avatar_id = process.env.HEYGEN_AVATAR_ID;
   if (process.env.HEYGEN_VOICE_ID) body.voice_id = process.env.HEYGEN_VOICE_ID;
 
-  const res = await fetch("https://api.heygen.com/v1/video_agent", {
+  const res = await fetch("https://api.heygen.com/v3/video-agents", {
     method: "POST",
     headers: {
       "X-Api-Key": process.env.HEYGEN_API_KEY!,
