@@ -16,7 +16,7 @@ jobs:
           response=$(curl -s -o /dev/null -w "%{http_code}" \
             -X GET \
             -H "x-cron-secret: ${{ secrets.CRON_SECRET }}" \
-            https://senda-natural-automatizacion-rrss.vercel.app/api/automation/generate-daily)
+            https://senda-natural-automatizacion-rrss-git-main-senda-natural.vercel.app/api/automation/generate-daily)
           echo "Response status: $response"
           if [ "$response" != "200" ]; then
             echo "Error: received status $response"
@@ -32,4 +32,4 @@ jobs:
           curl -s \
             -X GET \
             -H "x-cron-secret: ${{ secrets.CRON_SECRET }}" \
-            https://senda-natural-automatizacion-rrss.vercel.app/api/automation/check-video
+            https://senda-natural-automatizacion-rrss-git-main-senda-natural.vercel.app/api/automation/check-video
