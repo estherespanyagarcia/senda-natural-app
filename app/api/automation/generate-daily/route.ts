@@ -48,24 +48,56 @@ async function findTodayEntry() {
 }
 
 // Maps Ringana commercial product names → generic Spanish descriptions for narration
+// Longer/more specific keys must come before shorter ones that could overlap
 const PRODUCT_NAME_MAP: Record<string, string> = {
-  "body milk": "crema hidratante corporal",
-  "body wash": "gel de ducha natural",
-  "deodorant": "desodorante natural",
+  // FRESH facial line — specific variants first
+  "fresh cream light": "crema facial hidratante de textura ligera",
+  "fresh cream rich": "crema facial nutritiva de textura rica",
+  "fresh tinted moisturiser": "crema hidratante con color natural",
+  "fresh tinted moisturizer": "crema hidratante con color natural",
+  "fresh eye serum": "sérum contorno de ojos",
+  "fresh cleansing gel": "gel limpiador facial natural",
+  "fresh micellar water": "agua micelar natural",
+  "fresh micellar": "agua micelar natural",
+  "fresh face oil": "aceite facial natural",
+  "fresh face serum": "sérum facial concentrado",
+  "fresh ampoules": "ampollas faciales concentradas",
+  "fresh ampoule": "ampolla facial concentrada",
+  "fresh essence": "esencia facial hidratante",
+  "fresh mask": "mascarilla facial natural",
+  "fresh exfoliant": "exfoliante facial natural",
+  "fresh toner": "tónico facial equilibrante",
+  "fresh serum": "sérum facial",
+  "fresh cream": "crema facial hidratante",
+  "fresh lip balm": "bálsamo labial natural",
   "fresh body milk": "crema hidratante corporal de textura ligera",
-  "face cream": "crema facial",
+  "fresh body wash": "gel de ducha natural",
+  "fresh deodorant": "desodorante natural",
+  // Generic facial products
+  "tinted moisturiser": "crema hidratante con color natural",
+  "tinted moisturizer": "crema hidratante con color natural",
+  "cleansing gel": "gel limpiador facial",
+  "micellar water": "agua micelar",
+  "face oil": "aceite facial",
+  "face serum": "sérum facial concentrado",
   "face wash": "limpiador facial",
+  "face cream": "crema facial",
+  "eye serum": "sérum contorno de ojos",
   "eye cream": "contorno de ojos",
   "lip balm": "bálsamo labial",
-  "serum": "sérum facial",
+  "exfoliant": "exfoliante facial",
   "toner": "tónico facial",
-  "exfoliant": "exfoliante corporal",
+  "serum": "sérum facial",
+  "mask": "mascarilla facial",
+  // Body products
+  "body milk": "crema hidratante corporal",
+  "body wash": "gel de ducha natural",
   "body oil": "aceite corporal",
   "hand cream": "crema de manos",
   "foot cream": "crema para pies",
+  "deodorant": "desodorante natural",
   "shampoo": "champú natural",
   "conditioner": "acondicionador natural",
-  "mask": "mascarilla",
 };
 
 function normalizeProductNames(text: string): string {
