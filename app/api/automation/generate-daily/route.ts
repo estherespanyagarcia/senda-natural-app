@@ -47,6 +47,36 @@ async function findTodayEntry() {
   return { entry: null, motivo: "No hay entradas pendientes disponibles." };
 }
 
+// Maps Ringana commercial product names → generic Spanish descriptions for narration
+const PRODUCT_NAME_MAP: Record<string, string> = {
+  "body milk": "crema hidratante corporal",
+  "body wash": "gel de ducha natural",
+  "deodorant": "desodorante natural",
+  "fresh body milk": "crema hidratante corporal de textura ligera",
+  "face cream": "crema facial",
+  "face wash": "limpiador facial",
+  "eye cream": "contorno de ojos",
+  "lip balm": "bálsamo labial",
+  "serum": "sérum facial",
+  "toner": "tónico facial",
+  "exfoliant": "exfoliante corporal",
+  "body oil": "aceite corporal",
+  "hand cream": "crema de manos",
+  "foot cream": "crema para pies",
+  "shampoo": "champú natural",
+  "conditioner": "acondicionador natural",
+  "mask": "mascarilla",
+};
+
+function normalizeProductNames(text: string): string {
+  let result = text;
+  for (const [brand, generic] of Object.entries(PRODUCT_NAME_MAP)) {
+    const regex = new RegExp(brand, "gi");
+    result = result.replace(regex, generic);
+  }
+  return result;
+}
+
 const STYLE_BLOCKS: Record<string, string> = {
   "dramático-investigativo": `STYLE — SHADOW CUT (Hillmann): Deep blacks, cold greys + blood red accent.
 Sharp angular text. Heavy shadow. Slow creeping push-ins.
@@ -78,14 +108,19 @@ function buildCinematicPrompt(entry: {
 }): string {
   const styleBlock = STYLE_BLOCKS[entry.tono] ?? STYLE_BLOCKS["dramático-investigativo"];
   const mediaHint = MEDIA_GUIDANCE[entry.tono] ?? MEDIA_GUIDANCE["dramático-investigativo"];
-  const guionContent = entry.guion || entry.tema;
+  const tema = normalizeProductNames(entry.tema);
+  const guionContent = normalizeProductNames(entry.guion || entry.tema);
 
-  return `The selected presenter delivers a cinematic short-form vertical video in Spanish about: ${entry.tema}.
+  return `The selected presenter delivers a cinematic short-form vertical video in Spanish about: ${tema}.
 
 SCRIPT (in Spanish — this is the core narration):
 ${guionContent}
 
 This script is a concept and theme to convey — not a verbatim transcript. You have full creative freedom to expand, elaborate, add examples, and fill the duration naturally. Do not pad with silence or pauses.
+
+BRANDING RULES (strictly enforce):
+- NEVER mention any brand name, product line name, or commercial label (e.g. Ringana, Body Milk, Body Wash, Deodorant as a product name). Refer to products only by their generic functional description in Spanish (e.g. "crema hidratante corporal", "gel de ducha natural", "desodorante natural").
+- Any product shown on screen must have completely unbranded, label-free packaging. No logos, no brand text, no identifiable marks on containers.
 
 VISUAL DIRECTION:
 ${mediaHint}
