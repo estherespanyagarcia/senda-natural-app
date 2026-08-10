@@ -9,6 +9,8 @@ const supabase = createClient(
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
+  const chatId = body?.message?.chat?.id ?? body?.callback_query?.message?.chat?.id;
+  if (chatId) console.log("[telegram-webhook] chat_id:", chatId);
   const callbackQuery = body?.callback_query;
   if (!callbackQuery) return NextResponse.json({ ok: true });
 
