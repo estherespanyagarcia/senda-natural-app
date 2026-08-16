@@ -180,8 +180,7 @@ async function launchHeyGenVideo(
 
 export async function GET(req: NextRequest) {
   const secret = req.headers.get("x-cron-secret");
-  const once = req.nextUrl.searchParams.get("once");
-  if (secret !== process.env.CRON_SECRET && once !== "e9f46b70-f40c-41a1-ada1-35b04b5ce713") {
+  if (secret !== process.env.CRON_SECRET) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
