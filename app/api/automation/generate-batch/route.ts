@@ -1,56 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
-import { sendTelegramMessage } from "@/lib/telegram";
+
+// Allow up to 300s on Vercel Pro; enough to fire 25 HeyGen requests
+export const maxDuration = 300;
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-async function findTodayEntry() {
-  const today = new Date().toISOString().split("T")[0];
-
-  const { data: primary } = await supabase
-    .from("content_calendar")
-    .select("*")
-    .eq("fecha_publicacion", today)
-    .eq("status", "pendiente")
-    .single();
-
-  if (primary) return { entry: primary, motivo: null };
-
-  const { data: history } = await supabase
-    .from("content_history")
-    .select("tema, formato, rrss")
-    .gte("fecha_generacion", new Date(Date.now() - 60 * 86400 * 1000).toISOString());
-
-  const usedCombos = new Set(
-    (history ?? []).map((h) => `${h.tema}|${h.formato}|${h.rrss}`)
-  );
-
-  const { data: pending } = await supabase
-    .from("content_calendar")
-    .select("*")
-    .eq("status", "pendiente")
-    .order("dia", { ascending: true });
-
-  const fallback = (pending ?? []).find(
-    (r) => !usedCombos.has(`${r.tema}|${r.formato}|${r.rrss}`)
-  );
-
-  if (fallback)
-    return {
-      entry: fallback,
-      motivo: `Fecha original sin pendientes. Seleccionado día ${fallback.dia} por combinación única.`,
-    };
-
-  return { entry: null, motivo: "No hay entradas pendientes disponibles." };
-}
-
 // Maps Ringana commercial product names → generic Spanish descriptions for narration
-// Longer/more specific keys must come before shorter ones that could overlap
 const PRODUCT_NAME_MAP: Record<string, string> = {
-  // FRESH facial line — specific variants first
   "fresh cream light": "crema facial hidratante de textura ligera",
   "fresh cream rich": "crema facial nutritiva de textura rica",
   "fresh tinted moisturiser": "crema hidratante con color natural",
@@ -73,7 +33,6 @@ const PRODUCT_NAME_MAP: Record<string, string> = {
   "fresh body milk": "crema hidratante corporal de textura ligera",
   "fresh body wash": "gel de ducha natural",
   "fresh deodorant": "desodorante natural",
-  // Generic facial products
   "tinted moisturiser": "crema hidratante con color natural",
   "tinted moisturizer": "crema hidratante con color natural",
   "cleansing gel": "gel limpiador facial",
@@ -89,7 +48,6 @@ const PRODUCT_NAME_MAP: Record<string, string> = {
   "toner": "tónico facial",
   "serum": "sérum facial",
   "mask": "mascarilla facial",
-  // Body products
   "body milk": "crema hidratante corporal",
   "body wash": "gel de ducha natural",
   "body oil": "aceite corporal",
@@ -99,15 +57,6 @@ const PRODUCT_NAME_MAP: Record<string, string> = {
   "shampoo": "champú natural",
   "conditioner": "acondicionador natural",
 };
-
-function normalizeProductNames(text: string): string {
-  let result = text;
-  for (const [brand, generic] of Object.entries(PRODUCT_NAME_MAP)) {
-    const regex = new RegExp(brand, "gi");
-    result = result.replace(regex, generic);
-  }
-  return result;
-}
 
 const STYLE_BLOCKS: Record<string, string> = {
   "dramático-investigativo": `STYLE — SHADOW CUT (Hillmann): Deep blacks, cold greys + blood red accent.
@@ -130,6 +79,15 @@ const MEDIA_GUIDANCE: Record<string, string> = {
   "editorial-producto": `Use cinematic macro product close-ups and texture shots. Lifestyle stock footage of clean, minimal bathroom scenes with natural light. Gold and black color grading. Elegant, aspirational aesthetic throughout.`,
   "provocador-revelador": `Use bold motion graphics to display the MYTH statement prominently, then dramatically strike it through. Stock footage of people applying conventional products. Energetic, confrontational visual rhythm that feels like a revelation.`,
 };
+
+function normalizeProductNames(text: string): string {
+  let result = text;
+  for (const [brand, generic] of Object.entries(PRODUCT_NAME_MAP)) {
+    const regex = new RegExp(brand, "gi");
+    result = result.replace(regex, generic);
+  }
+  return result;
+}
 
 function buildCinematicPrompt(entry: {
   dia: number;
@@ -164,8 +122,28 @@ Target duration: 20-30 seconds.
 ${styleBlock}`;
 }
 
-async function createVideoAgent(
-  entry: { dia: number; tema: string; pilar: string; tono: string; guion: string }
+type CalendarEntry = {
+  id: string;
+  dia: number;
+  tema: string;
+  pilar: string;
+  tono: string;
+  guion: string;
+  formato: string;
+  rrss: string;
+};
+
+type BatchResult = {
+  dia: number;
+  tema: string;
+  videoId: string;
+  sessionId: string | null;
+  status: "ok" | "error";
+  error?: string;
+};
+
+async function launchHeyGenVideo(
+  entry: CalendarEntry
 ): Promise<{ videoId: string; sessionId: string | null }> {
   const prompt = buildCinematicPrompt(entry);
 
@@ -188,7 +166,7 @@ async function createVideoAgent(
 
   if (!res.ok) {
     const errText = await res.text();
-    throw new Error(`HeyGen Video Agent error ${res.status}: ${errText}`);
+    throw new Error(`HeyGen error ${res.status}: ${errText}`);
   }
 
   const data = await res.json();
@@ -200,73 +178,95 @@ async function createVideoAgent(
   return { videoId, sessionId };
 }
 
-async function sendApprovalNotification(
-  dia: number,
-  tema: string,
-  pilar: string,
-  videoId: string,
-  sessionId: string | null
-): Promise<string | null> {
-  const sessionLink = sessionId
-    ? `\n<a href="https://app.heygen.com/video-agent/${sessionId}">🎬 Ver sesión en HeyGen</a>`
-    : "";
-
-  const text =
-    `🎬 <b>Contenido generándose — Día ${dia}</b>\n\n` +
-    `<b>Tema:</b> ${tema}\n` +
-    `<b>Pilar:</b> ${pilar}\n\n` +
-    `⏳ Vídeo cinemático en proceso (20-45 min)\n` +
-    `ID: <code>${videoId}</code>${sessionLink}\n\n` +
-    `Recibirás otro mensaje cuando esté listo para revisar.`;
-
-  const keyboard = [
-    [
-      { text: "✅ Aprobar", callback_data: `approve_${dia}` },
-      { text: "❌ Rechazar", callback_data: `reject_${dia}` },
-    ],
-    [{ text: "✏️ Ver guion completo", callback_data: `script_${dia}` }],
-  ];
-
-  return sendTelegramMessage(text, keyboard);
-}
-
 export async function GET(req: NextRequest) {
   const secret = req.headers.get("x-cron-secret");
   if (secret !== process.env.CRON_SECRET) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  // How many to generate (default 25, override with ?n=N)
+  const n = Math.min(Number(req.nextUrl.searchParams.get("n") ?? "25"), 50);
+
+  // Fetch the first N pendiente entries ordered by dia
+  const { data: entries, error: fetchError } = await supabase
+    .from("content_calendar")
+    .select("id, dia, tema, pilar, tono, guion, formato, rrss")
+    .eq("status", "pendiente")
+    .order("dia", { ascending: true })
+    .limit(n);
+
+  if (fetchError) {
+    return NextResponse.json({ error: fetchError.message }, { status: 500 });
+  }
+
+  if (!entries || entries.length === 0) {
+    return NextResponse.json({ ok: true, message: "No hay entradas pendientes.", launched: [] });
+  }
+
+  // Mark all fetched entries as "generando" atomically before hitting HeyGen
+  const ids = entries.map((e: CalendarEntry) => e.id);
+  await supabase
+    .from("content_calendar")
+    .update({ status: "generando" })
+    .in("id", ids);
+
+  // Fire all HeyGen requests in parallel
+  const results = await Promise.allSettled(
+    entries.map(async (entry: CalendarEntry): Promise<BatchResult> => {
+      try {
+        const { videoId, sessionId } = await launchHeyGenVideo(entry);
+
+        const updatePayload: Record<string, unknown> = {
+          higgsfield_job_id: videoId,
+          status: "generando_video",
+        };
+        if (sessionId) updatePayload.notas = `session_id: ${sessionId}`;
+
+        await supabase
+          .from("content_calendar")
+          .update(updatePayload)
+          .eq("id", entry.id);
+
+        await supabase.from("content_history").insert({
+          dia: entry.dia,
+          tema: entry.tema,
+          formato: entry.formato,
+          rrss: entry.rrss ?? "instagram",
+          status_final: "generando",
+        });
+
+        return { dia: entry.dia, tema: entry.tema, videoId, sessionId, status: "ok" };
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        // Roll back status so the cron can retry this entry later
+        await supabase
+          .from("content_calendar")
+          .update({ status: "pendiente", notas: `Batch error: ${msg}` })
+          .eq("id", entry.id);
+        return { dia: entry.dia, tema: entry.tema, videoId: "", sessionId: null, status: "error", error: msg };
+      }
+    })
+  );
+
+  const launched: BatchResult[] = results.map((r) =>
+    r.status === "fulfilled" ? r.value : { dia: 0, tema: "", videoId: "", sessionId: null, status: "error", error: String((r as PromiseRejectedResult).reason) }
+  );
+
+  const ok = launched.filter((r) => r.status === "ok");
+  const failed = launched.filter((r) => r.status === "error");
+
   const today = new Date().toISOString().split("T")[0];
-  const { entry, motivo } = await findTodayEntry();
+  await supabase.from("cron_log").insert({
+    fecha: today,
+    status: failed.length === 0 ? "batch_completado" : "batch_parcial",
+    motivo_cambio: `Lanzados ${ok.length}/${entries.length}. Fallidos: ${failed.length}`,
+  });
 
-  if (!entry) {
-    await supabase.from("cron_log").insert({ fecha: today, status: "sin_contenido", motivo_cambio: motivo });
-    return NextResponse.json({ ok: false, message: motivo });
-  }
-
-  await supabase.from("content_calendar").update({ status: "generando" }).eq("id", entry.id);
-  await supabase.from("cron_log").insert({ fecha: today, dia_seleccionado: entry.dia, motivo_cambio: motivo, status: "iniciado" });
-
-  try {
-    await supabase.from("content_history").insert({ dia: entry.dia, tema: entry.tema, formato: entry.formato, rrss: entry.rrss ?? "instagram", status_final: "generando" });
-
-    const { videoId, sessionId } = await createVideoAgent(entry);
-
-    const updatePayload: Record<string, unknown> = { higgsfield_job_id: videoId, status: "generando_video" };
-    if (sessionId) updatePayload.notas = `session_id: ${sessionId}`;
-    await supabase.from("content_calendar").update(updatePayload).eq("id", entry.id);
-
-    const telegramMsgId = await sendApprovalNotification(entry.dia, entry.tema, entry.pilar, videoId, sessionId);
-    if (telegramMsgId) await supabase.from("content_calendar").update({ telegram_message_id: telegramMsgId }).eq("id", entry.id);
-
-    await supabase.from("cron_log").insert({ fecha: today, dia_seleccionado: entry.dia, status: "completado" });
-    return NextResponse.json({ ok: true, dia: entry.dia, tema: entry.tema, heygenVideoId: videoId, sessionId, telegramMsgId });
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.error("[generate-daily] Error:", msg);
-    await supabase.from("content_calendar").update({ status: "pendiente", notas: `Error: ${msg}` }).eq("id", entry.id);
-    await supabase.from("cron_log").insert({ fecha: today, dia_seleccionado: entry.dia, status: "error", motivo_cambio: msg });
-    await sendTelegramMessage(`⚠️ <b>Error generando contenido — Día ${entry.dia}</b>\n\n<code>${msg}</code>`);
-    return NextResponse.json({ ok: false, error: msg }, { status: 500 });
-  }
+  return NextResponse.json({
+    ok: true,
+    total: entries.length,
+    launched: ok.length,
+    failed: failed.length,
+    videos: launched,
+  });
 }
