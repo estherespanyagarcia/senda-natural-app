@@ -1,5 +1,6 @@
 {
   "last_updated": "2026-08-29",
+  "days_generated": 14,
   "generated": [
     {
       "day": 1,
@@ -63,6 +64,103 @@
       "platform": "Higgsfield",
       "job_ids": ["cfd5a393-0aa8-4c25-92fc-c5b3252b80e4"],
       "generated_at": "2026-08-29"
+    },
+    {
+      "day": 7,
+      "date": "07/09/2026",
+      "format": "Reel",
+      "topic": "El crimen del contorno ocular descuidado",
+      "platform": "Higgsfield",
+      "job_ids": ["ce730db9-f51d-4018-bdf6-3beed920ac0f"],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 8,
+      "date": "08/09/2026",
+      "format": "Carrusel",
+      "topic": "El día que la gravedad borró tu mandíbula",
+      "platform": "Higgsfield",
+      "job_ids": [
+        "37d666f2-a031-4b45-b3b6-21ae23c4e7ef",
+        "2bbd47b5-94bd-4650-af4b-21e402de6fb3",
+        "f5612630-c05b-4e37-8f1b-59e66e9204fb",
+        "363a52d9-0228-413d-8c0f-f8498a32ca48",
+        "b89d8fac-d8d5-473e-98ce-9b4d4a1a3e42",
+        "469bac4a-e8ad-43ec-8643-442f8a3c4dee"
+      ],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 9,
+      "date": "09/09/2026",
+      "format": "Reel",
+      "topic": "La piel que apagó el cortisol",
+      "platform": "Higgsfield",
+      "job_ids": ["32d2bed8-5367-4b06-b029-9cc2ddf8bc62"],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 10,
+      "date": "10/09/2026",
+      "format": "Carrusel",
+      "topic": "El tono que el sol robó en silencio",
+      "platform": "Higgsfield",
+      "job_ids": [
+        "9852eeb6-fc56-49de-ab55-75f8dc780c43",
+        "f708fbb6-8efe-44f0-9308-5361fa7c8274",
+        "896b2826-cfdf-45f5-bdc7-389a5000e01a",
+        "08333dfa-2cf2-4fd4-9801-4d304c3dd212",
+        "278105bc-e09d-4d85-b271-855ab6a5bc82",
+        "58c884ad-e484-43e6-9d27-e9fd3396edf4"
+      ],
+      "notes": "Slide 5 (278105bc) puede estar aún procesando",
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 11,
+      "date": "11/09/2026",
+      "format": "Reel",
+      "topic": "El maquillaje que protegía sin que lo supieras",
+      "platform": "Higgsfield",
+      "job_ids": ["45737a1d-6918-4f19-b79f-506437d644e7"],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 12,
+      "date": "12/09/2026",
+      "format": "Stories",
+      "topic": "La protección invisible que nunca encontraste",
+      "platform": "Higgsfield",
+      "job_ids": ["4ed27b2a-5244-4f24-abad-326a85214064"],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 13,
+      "date": "13/09/2026",
+      "format": "Foto / Quote",
+      "topic": "La piel que cambia de humor con el tiempo",
+      "platform": "Higgsfield",
+      "job_ids": ["9ee63449-afea-439c-b7aa-93dadb9dd0b7"],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 14,
+      "date": "14/09/2026",
+      "format": "Reel",
+      "topic": "El crimen de los poros que nadie investiga",
+      "platform": "Higgsfield",
+      "job_ids": ["7c9beede-1b1b-4806-a154-55bc0745b377"],
+      "notes": "Primer intento (8ab15f95) bloqueado por NSFW — regenerado con prompt limpio",
+      "generated_at": "2026-08-29"
+    }
+  ],
+  ],
+  "pending": [
+    {
+      "day": 10,
+      "job_id": "278105bc-e09d-4d85-b271-855ab6a5bc82",
+      "slide": 5,
+      "note": "Slide 5 de 6 del carrusel Día 10 — aún procesando en Higgsfield"
     }
   ],
   "notes": "Tracking automático de vídeos generados. Nunca repetir el mismo día/tema."
