@@ -23,7 +23,8 @@
       "format": "Reel",
       "topic": "El daño que el espejo aún no muestra",
       "platform": "Higgsfield",
-      "job_ids": ["8e49cc21-8762-4cc9-bdd0-cdc936ba20d1"],
+      "job_ids": ["b5eca170-1fd6-487a-929f-1259c0b017ff"],
+      "notes": "Regenerado 10s — pacing lento, reemplaza 8e49cc21",
       "generated_at": "2026-08-29"
     },
     {
@@ -41,7 +42,8 @@
       "format": "Reel",
       "topic": "La piel que bebe y nunca se sacia",
       "platform": "Higgsfield",
-      "job_ids": ["cdcde60d-fa1d-4fb0-9152-c9a3186fb97d"],
+      "job_ids": ["d7c8469c-4163-4cec-9b21-6d3211474b50"],
+      "notes": "Regenerado 10s — pacing lento, reemplaza cdcde60d",
       "generated_at": "2026-08-29"
     },
     {
