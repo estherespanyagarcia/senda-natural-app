@@ -1,5 +1,22 @@
 {
   "last_updated": "2026-08-29",
-  "generated": [],
+  "generated": [
+    {
+      "day": 1,
+      "date": "01/09/2026",
+      "format": "Carrusel",
+      "topic": "El hábito que nunca se formó por culpa del protector",
+      "platform": "Higgsfield",
+      "job_ids": [
+        "c95636cf-8785-4536-9927-281c21157715",
+        "09aea1aa-d29c-433c-bfe1-2187e15d0dfd",
+        "f1a2cdb3-5c03-4e86-a130-d381bf982d64",
+        "02df2586-4b31-47ec-8c6c-dd39dd31a29c",
+        "9ebb4b74-38dc-44f1-a4a5-e6d1b4cbd8c1",
+        "5053606d-064c-4407-90d1-f4c79138b972"
+      ],
+      "generated_at": "2026-08-29"
+    }
+  ],
   "notes": "Tracking automático de vídeos generados. Nunca repetir el mismo día/tema."
 }
