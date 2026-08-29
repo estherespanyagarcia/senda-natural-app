@@ -1,6 +1,6 @@
 {
   "last_updated": "2026-08-29",
-  "days_generated": 21,
+  "days_generated": 28,
   "generated": [
     {
       "day": 1,
@@ -230,6 +230,84 @@
       "topic": "El ritual que convirtió la rutina en protocolo",
       "platform": "Higgsfield",
       "job_ids": ["7e4931db-e57e-4910-9d5a-cd769a4d08c6"],
+      "generated_at": "2026-08-29"
+    }
+  ],
+    {
+      "day": 22,
+      "date": "22/09/2026",
+      "format": "Carrusel",
+      "topic": "El ingrediente que nadie te explicó que había en tu crema",
+      "platform": "Higgsfield",
+      "job_ids": [
+        "c40a62c3-94b2-41f9-b509-fc169ec31632",
+        "565003f3-fa47-4fa4-a9c5-b1d9be3119ea",
+        "c67d6a1b-8281-4096-b00f-e74184ec7da1",
+        "c61a5d82-c50e-4f3d-9d27-edd9c465960b",
+        "9e394fcc-1a19-4706-85fb-d212c6bd793d",
+        "0fdd8229-52d7-4d15-a857-59b36230d54f"
+      ],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 23,
+      "date": "23/09/2026",
+      "format": "Reel",
+      "topic": "El viaje que los nutrientes hacen hasta tu piel",
+      "platform": "Higgsfield",
+      "job_ids": ["e2c3aa36-3b53-4640-9c8b-c24a09bcdbb9"],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 24,
+      "date": "24/09/2026",
+      "format": "Carrusel",
+      "topic": "La piel que envejece antes de tiempo por culpa del tiempo",
+      "platform": "Higgsfield",
+      "job_ids": [
+        "d29f2c97-03d3-49d5-8a3d-f0a227564dec",
+        "866f0a96-be06-4c81-a8a5-039b6be5a5ad",
+        "4b6b46d2-4347-4c6f-b1ac-efb5d4358d4b",
+        "6e8fdebf-7c98-4a0f-b61a-d008d15e95e8",
+        "9e87555b-0a68-49ac-ad80-7972abe02777",
+        "b2f49bde-e65b-4c9b-b60c-02ce36c97d39"
+      ],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 25,
+      "date": "25/09/2026",
+      "format": "Reel",
+      "topic": "El minuto de silencio que tu piel necesita cada mañana",
+      "platform": "Higgsfield",
+      "job_ids": ["05707d5b-2363-4e39-b805-8eb8deccdbf3"],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 26,
+      "date": "26/09/2026",
+      "format": "Stories",
+      "topic": "La defensa que tu piel activa sola cuando la escuchas",
+      "platform": "Higgsfield",
+      "job_ids": ["1d0b48ba-364e-4784-9326-de03c0d222c0"],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 27,
+      "date": "27/09/2026",
+      "format": "Foto / Quote",
+      "topic": "La decisión que cambia la piel que tendrás en 10 años",
+      "platform": "Higgsfield",
+      "job_ids": ["b7447409-bf56-46c4-98ce-e77ce3be3cfe"],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 28,
+      "date": "28/09/2026",
+      "format": "Reel",
+      "topic": "El agua que tu piel espera cada noche",
+      "platform": "Higgsfield",
+      "job_ids": ["284d3f95-284d-450e-8b5d-68acdb6912aa"],
       "generated_at": "2026-08-29"
     }
   ],
