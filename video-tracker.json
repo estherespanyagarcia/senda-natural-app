@@ -16,6 +16,51 @@
         "5053606d-064c-4407-90d1-f4c79138b972"
       ],
       "generated_at": "2026-08-29"
+    },
+    {
+      "day": 2,
+      "date": "02/09/2026",
+      "format": "Reel",
+      "topic": "El daño que el espejo aún no muestra",
+      "platform": "Higgsfield",
+      "job_ids": ["8e49cc21-8762-4cc9-bdd0-cdc936ba20d1"],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 3,
+      "date": "03/09/2026",
+      "format": "Carrusel",
+      "topic": "Las líneas que aparecieron sin que cumplieras 40",
+      "platform": "Higgsfield",
+      "job_ids": ["04fd5c36-1f76-47ef-b6c9-150faf957487","cff0aa49-9562-4d36-9f51-57209125eaee","8f540a38-6033-4ee7-9538-80b7e00dcae2","044bc24f-732e-4e86-9f64-26a7946c657f","7b4b12c8-b2ce-41b6-a538-8843ad0f6d7b","acd73e3b-f25f-4e86-b84c-0e78f7db751a"],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 4,
+      "date": "04/09/2026",
+      "format": "Reel",
+      "topic": "La piel que bebe y nunca se sacia",
+      "platform": "Higgsfield",
+      "job_ids": ["cdcde60d-fa1d-4fb0-9152-c9a3186fb97d"],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 5,
+      "date": "05/09/2026",
+      "format": "Stories",
+      "topic": "El caso de la luminosidad desaparecida",
+      "platform": "Higgsfield",
+      "job_ids": ["9d02e6ef-8e0d-4ad5-8aa2-8c85adeb5920"],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 6,
+      "date": "06/09/2026",
+      "format": "Foto / Quote",
+      "topic": "La mancha que apareció cuando más brillabas",
+      "platform": "Higgsfield",
+      "job_ids": ["cfd5a393-0aa8-4c25-92fc-c5b3252b80e4"],
+      "generated_at": "2026-08-29"
     }
   ],
   "notes": "Tracking automático de vídeos generados. Nunca repetir el mismo día/tema."
