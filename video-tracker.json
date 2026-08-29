@@ -1,6 +1,6 @@
 {
   "last_updated": "2026-08-29",
-  "days_generated": 14,
+  "days_generated": 21,
   "generated": [
     {
       "day": 1,
@@ -154,6 +154,84 @@
       "generated_at": "2026-08-29"
     }
   ],
+  ],
+    {
+      "day": 15,
+      "date": "15/09/2026",
+      "format": "Carrusel",
+      "topic": "El sérum que llegó tarde a la fiesta",
+      "platform": "Higgsfield",
+      "job_ids": [
+        "10426dae-1b2e-4885-b502-8666d5906c72",
+        "21c5f8b7-d80e-4757-ba58-924701def28d",
+        "fc864e22-e9cd-49be-9185-963d2aa4e5b1",
+        "35cdd1bc-96ff-4b9a-a214-ab0d05252491",
+        "6126f05b-afbc-4ecf-be2d-c3e400375728",
+        "edfa71cd-9ccc-4ba0-afb0-63cb346b07cf"
+      ],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 16,
+      "date": "16/09/2026",
+      "format": "Reel",
+      "topic": "La contaminación que tu piel inhala sin que lo sepas",
+      "platform": "Higgsfield",
+      "job_ids": ["48371d83-dbb1-498c-b6fa-682483742a2e"],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 17,
+      "date": "17/09/2026",
+      "format": "Carrusel",
+      "topic": "El colágeno que empezó a desaparecer antes de los 25",
+      "platform": "Higgsfield",
+      "job_ids": [
+        "06daa9cc-0164-4dc6-a87a-b175c657db70",
+        "fb941223-6d22-4f67-bde5-e274a558542d",
+        "80171d04-b5e7-4f4a-984c-f822157ec16e",
+        "6ec420cd-6946-4c20-a482-4ab0fddad988",
+        "08c2e36f-b8a0-4110-970c-bb448c1110e9",
+        "26eed05b-b648-44c9-995d-0a67f2f747ff"
+      ],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 18,
+      "date": "18/09/2026",
+      "format": "Reel",
+      "topic": "La noche que tu piel trabaja sola",
+      "platform": "Higgsfield",
+      "job_ids": ["bf78f974-2e40-4614-ab88-1ba973e21dcc"],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 19,
+      "date": "19/09/2026",
+      "format": "Stories",
+      "topic": "El antioxidante que nunca llegó a tu piel",
+      "platform": "Higgsfield",
+      "job_ids": ["dd866194-9323-41b1-88e1-b4147071d10f"],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 20,
+      "date": "20/09/2026",
+      "format": "Foto / Quote",
+      "topic": "La barrera que nadie te dijo que tenías",
+      "platform": "Higgsfield",
+      "job_ids": ["538c0fbb-f16e-4430-8f63-3419be6b9386"],
+      "generated_at": "2026-08-29"
+    },
+    {
+      "day": 21,
+      "date": "21/09/2026",
+      "format": "Reel",
+      "topic": "El ritual que convirtió la rutina en protocolo",
+      "platform": "Higgsfield",
+      "job_ids": ["7e4931db-e57e-4910-9d5a-cd769a4d08c6"],
+      "generated_at": "2026-08-29"
+    }
   ],
   "pending": [
     {
